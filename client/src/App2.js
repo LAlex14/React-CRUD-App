@@ -3,6 +3,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios';
 
+const api_key = "15d2ea6d0dc1d476efbca3eba2b9bbfb";
+
 function App() {
 
   const [movieName, setMovieName] = useState('');
@@ -14,8 +16,25 @@ function App() {
     window.location.reload(false);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get('http://localhost:3001/api/get').then((response) => {
+      // data1 = response.data;
+      // async data1.map(el => {
+      //   el.posterLink = "lalalala";
+      // });
+      // console.log(response.data);
+      // await 
+
+      const fetchData = (film) => {
+        Axios.get("https://api.themoviedb.org/3/search/movie?api_key=" + api_key + "&query=" + film + "&callback=?").then
+          (async (response) => {
+            let data = JSON.parse(response.data.slice(2, -1)).results[0].poster_path;
+            console.log("http://image.tmdb.org/t/p/w500" + data)
+            return await data;
+          })
+      }
+
+      response.data.map(async el => el.posterLink = await fetchData(el.movieName))
       console.log(response.data);
       setMovieList(response.data);
     })

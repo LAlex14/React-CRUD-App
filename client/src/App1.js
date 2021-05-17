@@ -10,7 +10,7 @@ function App() {
 
   const [movieName, setMovieName] = useState('');
   const [review, setReview] = useState('');
-  const [movieReviewList, setMovieList] = useState([]);
+  const [movieList, setMovieList] = useState([]);
   const [newReview, setNewReview] = useState('');
   const [posterLink, setPosterLink] = useState([]);
 
@@ -43,6 +43,17 @@ function App() {
     })
   }, [])
 
+  useEffect(() => {
+    movieList.map((film) => {
+      Axios.get("https://api.themoviedb.org/3/search/movie?api_key=" + api_key + "&query=" + film + "&callback=?").then
+        ((response) => {
+          let data = JSON.parse(response.data.slice(2, -1)).results[0].poster_path;
+          setPosterLink(...posterLink, data);
+        })
+    })
+  }, [])
+
+  console.log(posterLink);
   // const useFetch = (film) => {
   //   const [status, setStatus] = useState('idle');
   //   const [data, setData] = useState([]);
@@ -64,7 +75,7 @@ function App() {
   // };
 
 
-  movieReviewList.map(async (el) => {
+  movieList.map(async (el) => {
     el.posterLink = getPoster(el.movieName);
   })
 
@@ -77,7 +88,7 @@ function App() {
       }).then(() => {
         console.log("successful insert");
       });
-      // setMovieList([...movieReviewList,
+      // setMovieList([...movieList,
       // { movieName: movieName, movieReview: review },
       // ]);
       // refreshPage();
@@ -128,9 +139,9 @@ function App() {
 
       <section className="album py-5 bg-light">
         <div className="container">
-          {console.log(movieReviewList)}
+          {console.log(movieList)}
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {movieReviewList.map((val) => {
+            {movieList.map((val) => {
               { console.log(val.posterLink) }
               return <div className="col mt-3">
                 <div className="card shadow-sm">
