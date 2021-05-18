@@ -10,15 +10,10 @@ function App() {
   const [movieList, setMovieList] = useState([]);
   const [newReview, setNewReview] = useState('');
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
+  var refreshPage = () => setTimeout(() => { window.location.reload(); }, 50);
 
   useEffect(() => {
-    Axios.get('http://localhost:3001/api/get').then((response) => {
-      console.log(response.data);
-      setMovieList(response.data);
-    })
+    Axios.get('http://localhost:3001/api/get').then((response) => setMovieList(response.data))
   }, [])
 
   const submitReview = () => {
@@ -26,13 +21,7 @@ function App() {
       Axios.post('http://localhost:3001/api/insert', {
         movieName: movieName,
         movieReview: review
-      }).then(() => {
-        console.log("successful insert");
       });
-      // setMovieList([...movieList,
-      // { movieName: movieName, movieReview: review },
-      // ]);
-      // refreshPage();
       refreshPage();
     }
   };
@@ -43,12 +32,13 @@ function App() {
   };
 
   const updateReview = (movie) => {
-    Axios.put(`http://localhost:3001/api/update`, {
-      movieName: movie,
-      movieReview: newReview
-    });
-    setNewReview('');
-    refreshPage();
+    if (newReview !== '') {
+      Axios.put(`http://localhost:3001/api/update`, {
+        movieName: movie,
+        movieReview: newReview
+      });
+      refreshPage();
+    }
   };
 
   return (
@@ -91,7 +81,6 @@ function App() {
       </section>
     </main >
   );
-
 }
 
 export default App;
