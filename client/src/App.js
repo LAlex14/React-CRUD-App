@@ -74,13 +74,11 @@ function App() {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3">
           {movieList.map((val) => {
             return <div className="col mt-3">
-              <div className="card shadow-sm">
+              <div className="card shadow-sm text-center">
                 <h3 className="m-2">{val.movieName}</h3>
-                <div className="card-body pt-1">
+                <div className="card-footer pt-auto">
                   <p className="card-text">{val.movieReview}</p>
-                  <input className="form-control mb-2" placeholder="new review" type="text" onChange={(e) => {
-                    setNewReview(e.target.value)
-                  }} />
+                  <input className="form-control mb-2" placeholder="new review" type="text" onChange={(e) => setNewReview(e.target.value)} />
                   <div className="d-flex justify-content-between">
                     <button className="btn btn-sm btn-outline-primary" onClick={() => { updateReview(val.movieName) }}>Update</button>
                     <button className="btn btn-sm btn-outline-danger" onClick={() => { deleteReview(val.movieName) }}>Delete</button>
@@ -91,7 +89,7 @@ function App() {
           })}
         </div>
       </section>
-    </main>
+    </main >
   );
 
 }
