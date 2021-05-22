@@ -6,7 +6,7 @@ import Axios from 'axios';
 function App() {
 
   const [movieName, setMovieName] = useState('');
-  const [review, setReview] = useState('');
+  const [movieReview, setMovieReview] = useState('');
   const [movieList, setMovieList] = useState([]);
   const [newReview, setNewReview] = useState('');
 
@@ -17,24 +17,24 @@ function App() {
   }, [])
 
   const submitReview = () => {
-    if (movieName !== '' & review !== '') {
+    if (movieName !== '' & movieReview !== '') {
       Axios.post('http://localhost:3001/api/insert', {
         movieName: movieName,
-        movieReview: review
+        movieReview: movieReview
       });
       refreshPage();
     }
   };
 
-  const deleteReview = (movie) => {
-    Axios.delete(`http://localhost:3001/api/delete/${movie}`);
+  const deleteReview = (movieName) => {
+    Axios.delete(`http://localhost:3001/api/delete/${movieName}`);
     refreshPage();
   };
 
-  const updateReview = (movie) => {
+  const updateReview = (movieName) => {
     if (newReview !== '') {
       Axios.put(`http://localhost:3001/api/update`, {
-        movieName: movie,
+        movieName: movieName,
         movieReview: newReview
       });
       refreshPage();
@@ -55,7 +55,7 @@ function App() {
           type="text"
           name="review"
           onChange={(e) => {
-            setReview(e.target.value)
+            setMovieReview(e.target.value)
           }} required />
         <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={submitReview}>Submit</button>
       </section>

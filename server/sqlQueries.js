@@ -9,15 +9,15 @@ module.exports = {
     // },
     CreateDatabase: {
         query: `CREATE DATABASE IF NOT EXISTS ${conData.databaseName};`,
-        clg: "The database is ready to use"
+        clg: "The database is ready"
     },
     UseDatabase: {
         query: `USE ${conData.databaseName};`,
-        clg: "The database has been selected"
+        clg: "The database has been selected for use"
     },
     CreateTable: {
         query: "CREATE TABLE IF NOT EXISTS movie_reviews (`id` INT NOT NULL AUTO_INCREMENT, `movieName` VARCHAR(45) NOT NULL, `movieReview` TEXT(300) NOT NULL, PRIMARY KEY (`id`));",
-        clg: "The table is ready to use"
+        clg: "The table is ready"
     },
     CheckIfTableHasRecords: {
         query: "SELECT * FROM movie_reviews LIMIT 1;",
