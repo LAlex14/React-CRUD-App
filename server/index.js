@@ -6,14 +6,14 @@ const sql = require('./sqlQueries');
 const conData = require('./connectionData');
 
 function clgResult(message, err) {
-    if (err) throw err;
-    console.log((new Date()).toUTCString() + " - " + message);
+    if (err) throw err; console.log((new Date()).toUTCString() + " - " + message);
 }
 
 function runQuery(query, arr, appRes) {
     let sqlQuery = eval(`sql.${query}`);
-    query === 'CheckIfTableHasRecords' ? db.query(sqlQuery.query, (err, result) => result.length ? clgResult(sqlQuery.clg) : runQuery('Fill')) :
-        db.query(sqlQuery.query, arr, (err, result) => clgResult(sqlQuery.clg, err, query === 'Select' ? appRes.send(result) : result));
+    db.query(sqlQuery.query, arr, (err, result) => query === 'CheckIfTableHasRecords' ?
+        result.length ? clgResult(sqlQuery.clg) : runQuery('Fill') :
+        clgResult(sqlQuery.clg, err, query === 'Select' ? appRes.send(result) : result));
 }
 
 var db = mysql.createConnection(conData.connection);
