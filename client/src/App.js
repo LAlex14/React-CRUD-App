@@ -10,7 +10,7 @@ function App() {
   const [movieList, setMovieList] = useState([]);
   const [newReview, setNewReview] = useState('');
 
-  var refreshPage = () => setTimeout(() => { window.location.reload(); }, 50);
+  const refreshPage = () => setTimeout(() => { window.location.reload(); }, 50);
 
   useEffect(() => {
     Axios.get('http://localhost:3001/api/get').then((response) => setMovieList(response.data))
@@ -65,8 +65,8 @@ function App() {
           {movieList.map((val) => {
             return <div className="col mt-3">
               <div className="card shadow-sm text-center">
-                <h3 className="m-2">{val.movieName}</h3>
-                <div className="card-footer pt-auto">
+                <h3 className="m-3">{val.movieName}</h3>
+                <div className="card-footer">
                   <p className="card-text">{val.movieReview}</p>
                   <input className="form-control mb-2" placeholder="new review" type="text" onChange={(e) => setNewReview(e.target.value)} />
                   <div className="d-flex justify-content-between">
