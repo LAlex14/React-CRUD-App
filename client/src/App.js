@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios';
 
 function App() {
-
   const [movieName, setMovieName] = useState('');
   const [movieReview, setMovieReview] = useState('');
   const [movieList, setMovieList] = useState([]);
@@ -17,13 +15,16 @@ function App() {
   }, [])
 
   const submitReview = () => {
-    if (movieName !== '' & movieReview !== '') {
-      Axios.post('http://localhost:3001/api/insert', {
-        movieName: movieName,
-        movieReview: movieReview
+    if (movieName !== '' & movieReview !== '')
+      Axios.post('http://localhost:3001/api/check', { movieName: movieName }).then((response) => {
+        if (response.data.length == 0) {
+          Axios.post('http://localhost:3001/api/insert', {
+            movieName: movieName,
+            movieReview: movieReview
+          });
+          refreshPage();
+        } else alert('There is already a movie with the same name');
       });
-      refreshPage();
-    }
   };
 
   const deleteReview = (movieName) => {

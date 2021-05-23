@@ -14,7 +14,7 @@ function runQuery(query, arr, appRes) {
     let sqlQuery = eval(`sql.${query}`);
     db.query(sqlQuery.query, arr, (err, result) => query === 'CheckIfTableHasRecords' ?
         (result.length ? clgResult(sqlQuery.clg) : runQuery('Fill')) :
-        (clgResult(sqlQuery.clg, err, query === 'Select' ? appRes.send(result) : result)));
+        (clgResult(sqlQuery.clg, err, query === 'Select' || query === 'CheckIfMovieExists' ? appRes.send(result) : result)));
 }
 
 var db = mysql.createConnection(conData.connection);
@@ -34,7 +34,12 @@ app.get('/api/get', (req, res) => {
 app.post('/api/insert', (req, res) => {
     let movieName = req.body.movieName;
     let movieReview = req.body.movieReview;
-    runQuery('Insert', [movieName, movieReview])
+    runQuery('Insert', [movieName, movieReview]);
+});
+
+app.post('/api/check', (req, res) => {
+    let movieName = req.body.movieName;
+    runQuery('CheckIfMovieExists', movieName, res);
 });
 
 app.delete('/api/delete/:movieName', (req, res) => {
