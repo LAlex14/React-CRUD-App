@@ -1,6 +1,6 @@
 # React-CRUD-App
 
-### in `./connectionData.js` set MySQL login data
+### in `./server/connectionData.js` set MySQL login data
 
 ### `npm run devStart` in the server directory
 
