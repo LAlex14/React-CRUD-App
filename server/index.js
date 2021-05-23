@@ -13,9 +13,14 @@ function clgResult(message, err) {
 function runQuery(query, arr, appRes) {
     let sqlQuery = eval(`sql.${query}`);
     db.query(sqlQuery.query, arr, (err, result) => query === 'CheckIfTableHasRecords' ?
-        (result.length ? clgResult(sqlQuery.clg) : runQuery('Fill')) :
+        (result.length ? clgResult(sqlQuery.clg, err) : runQuery('Fill')) :
         (clgResult(sqlQuery.clg, err, query === 'Select' || query === 'CheckIfMovieExists' ? appRes.send(result) : result)));
 }
+
+// db.query(sqlQuery.query, arr, (err, result) => result.length ? clgResult(sqlQuery.clg) : runQuery('Fill')); //* daca query ul este acesta : 'CheckIfTableHasRecords'
+//* face un Select * din tabela, și result e rezultatul, dacă rezultatul e adevarat(mai mare ca 0) se afiseaza clg-ul, iar daca e 0 se umple tabela 
+// db.query(sqlQuery.query, arr, (err, result) => clgResult(sqlQuery.clg, err, appRes.send(result))); //* daca query ul este acesta : 'Select' sau 'CheckIfMovieExists'
+// db.query(sqlQuery.query, arr, (err, result) => clgResult(sqlQuery.clg, err)); //* pentru restul query-urilor
 
 var db = mysql.createConnection(conData.connection);
 
