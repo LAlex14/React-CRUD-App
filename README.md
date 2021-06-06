@@ -1,6 +1,6 @@
 # React-CRUD-App
 
-### for a mini-presentation of the project, access the „React crud app Presentation.pdf” file
+### for a short presentation of the project, see the „shortPresentation.pdf” file
 
 ### in `./server/connectionData.js` set MySQL login data
 
